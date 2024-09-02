@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "name": "rolemanagement"
+    },
+    {
+        "id": 2,
+        "name": "permissionmanagement"
+    },
+    {
+        "id": 3,
+        "name": "systemmanagement"
+    }
+]
