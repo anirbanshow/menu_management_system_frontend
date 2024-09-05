@@ -17,7 +17,7 @@ const MenuItem = ({ item, depth }) => {
 
     const dispatch = useDispatch();
 
-    const itemDepth = depth + 1; // Calculate depth for current 
+    const itemDepth = depth + 1;
 
     function buttonEventHandler(item) {
         dispatch(addInfo(item));
@@ -29,13 +29,14 @@ const MenuItem = ({ item, depth }) => {
                 {
                     MODE === "development"
                         ? <span>{item.id} - {item.name} (Depth: {itemDepth})</span>
-                        : <span>{item.name} (Depth: {itemDepth})</span>
+                        : <span>{item.name}</span>
                 }
 
                 <button className='addBtn' onClick={() => buttonEventHandler(item)}>
                     <i className="fa-solid fa-plus"></i>
                 </button>
             </div>
+
             {item.children && item.children.length > 0 && (
                 <ul>
                     {item.children.map((child) => (

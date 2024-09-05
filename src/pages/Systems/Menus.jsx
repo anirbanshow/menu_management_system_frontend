@@ -2,11 +2,13 @@ import axios from 'axios';
 
 import { useEffect, useState } from 'react';
 
+import BaseLayout from '../../layouts/BaseLayout'
+import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
+import ContentHeader from '../../components/ContentHeader/ContentHeader';
+
+import RootMenu from '../../components/RootMenu/RootMenu';
 import MenuList from './../../components/MenuList/MenuList';
 import MenuItemForm from '../../components/MenuItemForm/MenuItemForm';
-import RootMenu from '../../components/RootMenu/RootMenu';
-
-import BaseLayout from '../../layouts/BaseLayout'
 
 const Menus = () => {
 
@@ -55,27 +57,34 @@ const Menus = () => {
     return (
         <BaseLayout>
 
-            <div className="content_area" >
+            <div className="content_area">
+                <div className="inner_wrapper">
 
-                <div className='row'>
+                    <Breadcrumb />
 
-                    <div className='col-md-6'>
+                    <ContentHeader />
 
-                        <RootMenu />
+                    <div className="row menu_listing">
 
-                        <MenuList menuItems={menuItems} />
+                        <div className="col-md-6">
+
+                            <RootMenu />
+
+                            <MenuList menuItems={menuItems} />
+
+                        </div>
+
+                        <div className="col-md-6">
+                            <MenuItemForm
+                                onAdd={addMenuItem}
+                                menuItems={menuItems}
+                                childMenus={childMenus}
+                            />
+                        </div>
                     </div>
-
-                    <div className='col-md-6'>
-                        <MenuItemForm
-                            onAdd={addMenuItem}
-                            menuItems={menuItems}
-                            childMenus={childMenus}
-                        />
-                    </div>
-
                 </div>
             </div>
+
 
         </BaseLayout>
     )
