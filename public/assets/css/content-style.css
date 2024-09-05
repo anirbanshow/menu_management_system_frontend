@@ -48,7 +48,6 @@ nav .breadcrumb-item a {
 .listing_wrapper {
     margin-top: 0.25rem;
     margin-left: 1rem;
-    border-left: 1px solid gray;
     overflow: auto;
 }
 

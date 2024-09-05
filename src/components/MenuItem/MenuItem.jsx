@@ -19,32 +19,42 @@ const MenuItem = ({ item, depth }) => {
 
     const itemDepth = depth + 1;
 
-    function buttonEventHandler(item) {
-        dispatch(addInfo(item));
-    }
+    function buttonEventHandler(item) { dispatch(addInfo(item)); }
 
     return (
-        <li>
-            <div>
-                {
-                    MODE === "development"
-                        ? <span>{item.id} - {item.name} (Depth: {itemDepth})</span>
-                        : <span>{item.name}</span>
-                }
+        <>
+            <div className="relative">
 
-                <button className='addBtn' onClick={() => buttonEventHandler(item)}>
-                    <i className="fa-solid fa-plus"></i>
-                </button>
+                {item?.parent_id && (<div className="left_v_border" />)}
+
+                <div className="ms-3">
+
+                    <div className="d-flex justify-content-start align-items-center">
+
+                        {item?.parent_id && (<div className="mini_gap" />)}
+
+                        {
+                            item.children && item.children.length > 0 && (
+                                <button><i class="fa-solid fa-angle-down"></i></button>
+                            )
+                        }
+                        <span>{item.name}</span>
+
+                        <button className='addBtn' onClick={() => buttonEventHandler(item)}>
+                            <i className="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+
+                    {item.children && item.children.length > 0 && (
+                        <div className="nested_childs">
+                            {item.children.map((child) => (
+                                <MenuItem key={child.id} item={child} depth={itemDepth} />
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
-
-            {item.children && item.children.length > 0 && (
-                <ul>
-                    {item.children.map((child) => (
-                        <MenuItem key={child.id} item={child} depth={itemDepth} />
-                    ))}
-                </ul>
-            )}
-        </li>
+        </>
     );
 };
 

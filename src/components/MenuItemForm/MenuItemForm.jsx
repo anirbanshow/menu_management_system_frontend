@@ -59,19 +59,14 @@ const MenuItemForm = ({ onAdd, menuItems, childMenus }) => {
                                 childMenus.map((item, index) => {
                                     return <option
                                         key={item.id}
-                                        defaultValue={item.id}
+                                        // defaultValue={item.id}
                                         selected={item.id == parentID}
                                     >
                                         {
                                             MODE === "development"
-                                                ? <>
-                                                    {item.id} - {item.name} - {parentID}
-                                                </>
-                                                : <>
-                                                    {item.name}
-                                                </>
+                                                ? <> {item.id} - {item.name} - {parentID}</>
+                                                : <>{item.name}  </>
                                         }
-
                                     </option>
                                 })
                             }

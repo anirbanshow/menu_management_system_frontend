@@ -20,7 +20,7 @@ const App = () => {
 
         <Route exact path="/system-code" element={<SystemCode />} />
         <Route exact path="/properties" element={<Properties />} />
-        <Route exact path="/menus" element={<Menus />} />
+        <Route exact path="/menus" index element={<Menus />} />
         <Route exact path="/api-list" element={<APIList />} />
 
         <Route exact path="/users" element={<Users />} />
