@@ -44,7 +44,7 @@ const Menus = () => {
     const addMenuItem = async (data) => {
 
         try {
-            const response = await axios.post("http://127.0.0.1:8000/api/menus", data)
+            const response = await axios.post(`${VITE_URL}/menus`, data)
             fetchMenus();
             fetchChildMenus();
 

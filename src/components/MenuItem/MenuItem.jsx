@@ -13,6 +13,8 @@ const calculateMenuDepth = (menuItems) => {
 
 const MenuItem = ({ item, depth }) => {
 
+    const { MODE } = import.meta.env;
+
     const dispatch = useDispatch();
 
     const itemDepth = depth + 1; // Calculate depth for current 
@@ -24,7 +26,11 @@ const MenuItem = ({ item, depth }) => {
     return (
         <li>
             <div>
-                <span>{item.id} - {item.name} (Depth: {itemDepth})</span>
+                {
+                    MODE === "development"
+                        ? <span>{item.id} - {item.name} (Depth: {itemDepth})</span>
+                        : <span>{item.name} (Depth: {itemDepth})</span>
+                }
 
                 <button className='addBtn' onClick={() => buttonEventHandler(item)}>
                     <i className="fa-solid fa-plus"></i>

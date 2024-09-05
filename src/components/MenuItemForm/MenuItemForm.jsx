@@ -4,7 +4,7 @@ import { removeInfo } from '../../store/AddMenuSlice';
 
 const MenuItemForm = ({ onAdd, menuItems, childMenus }) => {
 
-    const { VITE_URL } = import.meta.env;
+    const { MODE } = import.meta.env;
 
     const dispatch = useDispatch();
 
@@ -62,7 +62,16 @@ const MenuItemForm = ({ onAdd, menuItems, childMenus }) => {
                                         defaultValue={item.id}
                                         selected={item.id == parentID}
                                     >
-                                        {item.id} - {item.name} - {parentID}
+                                        {
+                                            MODE === "development"
+                                                ? <>
+                                                    {item.id} - {item.name} - {parentID}
+                                                </>
+                                                : <>
+                                                    {item.name}
+                                                </>
+                                        }
+
                                     </option>
                                 })
                             }
