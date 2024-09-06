@@ -1,8 +1,14 @@
-import React from 'react'
+import BaseLayout from '../../layouts/BaseLayout';
 
 const Analysis = () => {
     return (
-        <div>Analysis</div>
+        <BaseLayout>
+
+            <div className="content_area">
+                <h1>Analysis</h1>
+            </div>
+
+        </BaseLayout>
     )
 }
 
