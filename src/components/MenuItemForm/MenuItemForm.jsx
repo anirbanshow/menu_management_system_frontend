@@ -13,8 +13,12 @@ const MenuItemForm = ({ onAdd, menuItems, childMenus }) => {
     const [name, setName] = useState('');
     const [parentID, setParentID] = useState("");
 
+    const [menuID, setMenuID] = useState("");
+    const [depth, setDepth] = useState("");
+
     useEffect(() => {
-        setParentID(selector?.id)
+        setParentID(selector?.id);
+        setMenuID(selector?.menu_id);
     }, [selector]);
 
 
@@ -40,6 +44,7 @@ const MenuItemForm = ({ onAdd, menuItems, childMenus }) => {
 
         setName("");
         setParentID("");
+        setMenuID("");
 
         dispatch(removeInfo({}));
     };
@@ -47,19 +52,29 @@ const MenuItemForm = ({ onAdd, menuItems, childMenus }) => {
     return (
         <div>
 
+            <div className="mb-3">
+                <label>MenuID</label>
+                <input type="text" disabled className="form-control" value={menuID} />
+            </div>
+
+
+            <div className="mb-3">
+                <label>Depth</label>
+                <input type="number" className="form-control" onChange={(e) => setDepth(e.target.value)} />
+            </div>
+
             {
                 menuItems.length > 0 && (
                     <div className="mb-3">
-                        <label>Parent Data:</label>
+                        <label>Parent</label>
                         <select className="form-select"
                             onChange={(e) => setParentID(e.target.value)}
                         >
                             <option value="">--Select--</option>
                             {
-                                childMenus.map((item, index) => {
+                                childMenus?.map((item, index) => {
                                     return <option
                                         key={item.id}
-                                        // defaultValue={item.id}
                                         selected={item.id == parentID}
                                     >
                                         {
@@ -80,7 +95,7 @@ const MenuItemForm = ({ onAdd, menuItems, childMenus }) => {
                 <input type="text" className="form-control" value={name} onChange={(e) => setName(e.target.value)} />
             </div>
 
-            <button type="submit" className='btn btn-primary' onClick={handleSubmit}>
+            <button type="submit" className='btn btn-primary submit_btn' onClick={handleSubmit}>
                 Add
             </button>
         </div>
