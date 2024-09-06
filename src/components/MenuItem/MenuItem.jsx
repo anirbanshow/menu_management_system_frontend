@@ -10,7 +10,6 @@ const calculateMenuDepth = (menuItems) => {
     return 1 + Math.max(...menuItems.map(item => calculateMenuDepth(item.children || [])));
 };
 
-
 const MenuItem = ({ item, depth }) => {
 
     const { MODE } = import.meta.env;
@@ -38,11 +37,20 @@ const MenuItem = ({ item, depth }) => {
                                 <button><i class="fa-solid fa-angle-down"></i></button>
                             )
                         }
-                        <span>{item.name}</span>
 
-                        <button className='addBtn' onClick={() => buttonEventHandler(item)}>
-                            <i className="fa-solid fa-plus"></i>
-                        </button>
+                        <div class="action_area">
+                            <span>{item.name}</span>
+
+                            <button onClick={() => buttonEventHandler(item)}>
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+
+                            <button>
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+
+
                     </div>
 
                     {item.children && item.children.length > 0 && (
