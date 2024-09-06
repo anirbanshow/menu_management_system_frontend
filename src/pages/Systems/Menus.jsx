@@ -43,16 +43,24 @@ const Menus = () => {
     }, []);
 
     const addMenuItem = async (data) => {
-
         try {
-            const response = await axios.post(`${VITE_URL}/menus`, data)
+            await axios.post(`${VITE_URL}/menus`, data)
             fetchMenus();
             fetchChildMenus();
-
         } catch (error) {
             console.log(error);
         }
     };
+
+    const deleteMenuItem = async (id) => {
+        try {
+            await axios.delete(`${VITE_URL}/menus/${id}`);
+            await fetchMenus();
+            await fetchChildMenus();
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <BaseLayout>
@@ -70,7 +78,7 @@ const Menus = () => {
 
                             <RootMenu />
 
-                            <MenuList menuItems={menuItems} />
+                            <MenuList menuItems={menuItems} onDelete={deleteMenuItem} />
 
                         </div>
 

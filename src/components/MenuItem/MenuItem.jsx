@@ -10,7 +10,7 @@ const calculateMenuDepth = (menuItems) => {
     return 1 + Math.max(...menuItems.map(item => calculateMenuDepth(item.children || [])));
 };
 
-const MenuItem = ({ item, depth }) => {
+const MenuItem = ({ item, depth, onDelete }) => {
 
     const { MODE } = import.meta.env;
 
@@ -18,7 +18,7 @@ const MenuItem = ({ item, depth }) => {
 
     const itemDepth = depth + 1;
 
-    function buttonEventHandler(item) { dispatch(addInfo(item)); }
+    function addMenuHandler(item) { dispatch(addInfo(item)); }
 
     return (
         <>
@@ -41,11 +41,11 @@ const MenuItem = ({ item, depth }) => {
                         <div class="action_area">
                             <span>{item.name}</span>
 
-                            <button onClick={() => buttonEventHandler(item)}>
+                            <button onClick={() => addMenuHandler(item)}>
                                 <i class="fa-solid fa-plus"></i>
                             </button>
 
-                            <button>
+                            <button onClick={() => onDelete(item.id)}>
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </div>
@@ -56,7 +56,7 @@ const MenuItem = ({ item, depth }) => {
                     {item.children && item.children.length > 0 && (
                         <div className="nested_childs">
                             {item.children.map((child) => (
-                                <MenuItem key={child.id} item={child} depth={itemDepth} />
+                                <MenuItem key={child.id} item={child} depth={itemDepth} onDelete={onDelete} />
                             ))}
                         </div>
                     )}

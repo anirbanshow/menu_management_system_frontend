@@ -1,19 +1,41 @@
-import React from 'react'
+import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { changesidebar } from '../../store/SidebarSlice';
 
-const Sidebar = () => {
+const Sidebar = ({ toggle, setToggle }) => {
 
     const dispatch = useDispatch();
     const sidebarSelector = useSelector(state => state?.sidebar);
+
+    useEffect(() => {
+        // Function to check the screen width
+        const handleResize = () => {
+            if (window.innerWidth > 767) {
+                setToggle(false);
+            }
+        };
+
+        // Initial check on mount
+        handleResize();
+
+        // Add event listener for window resize
+        window.addEventListener('resize', handleResize);
+
+        // Cleanup listener on component unmount
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     function sidebarHandler(name) {
         dispatch(changesidebar(name));
     }
 
     return (
-        <div className="menu_sidebar">
+        <div className="menu_sidebar" style={{
+            left: (toggle) ? 0 : ''
+        }}>
 
             <div className="top_area">
                 <svg width={70} height={22} viewBox="0 0 70 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -35,7 +57,9 @@ const Sidebar = () => {
                         </clipPath>
                     </defs>
                 </svg>
-                <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={() => {
+                    setToggle(!toggle);
+                }}>
                     <path d="M3 18V16H16V18H3ZM19.6 17L14.6 12L19.6 7L21 8.4L17.4 12L21 15.6L19.6 17ZM3 13V11H13V13H3ZM3 8V6H16V8H3Z" fill="white" />
                 </svg>
             </div>
@@ -88,7 +112,7 @@ const Sidebar = () => {
                         sidebarSelector === "userGroup" && (
                             <ul>
                                 <li>
-                                    <NavLink to="/users" className="active">
+                                    <NavLink to="/users">
                                         <i className="fa-solid fa-bars" />
                                         users
                                     </NavLink>
@@ -114,7 +138,7 @@ const Sidebar = () => {
                         sidebarSelector === "competition" && (
                             <ul>
                                 <li>
-                                    <NavLink to="/competitors" className="active">
+                                    <NavLink to="/competitors">
                                         <i className="fa-solid fa-bars" />
                                         Competitors
                                     </NavLink>
