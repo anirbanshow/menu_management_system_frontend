@@ -13,6 +13,14 @@ const MenuList = ({ menuItems, onDelete }) => {
         setToggle(option)
     }
 
+    function toggleFromParentExpandButton() {
+        console.log('toggleFromParentExpandButton');
+        setToggle({
+            expand: true,
+            collaspe: false
+        })
+    }
+
     return (
         <>
             <div className='menu_controll_area'>
@@ -40,6 +48,7 @@ const MenuList = ({ menuItems, onDelete }) => {
                         depth={0}
                         onDelete={onDelete}
                         toggle={toggle}
+                        parentExpand={toggleFromParentExpandButton}
                     />
                 ))}
             </div>

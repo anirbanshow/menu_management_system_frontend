@@ -11,7 +11,7 @@ const calculateMenuDepth = (menuItems) => {
     return 1 + Math.max(...menuItems.map(item => calculateMenuDepth(item.children || [])));
 };
 
-const MenuItem = ({ item, depth, onDelete, toggle }) => {
+const MenuItem = ({ item, depth, onDelete, toggle, parentExpand }) => {
 
     const [isExpanded, setIsExpanded] = useState(true);
 
@@ -24,6 +24,7 @@ const MenuItem = ({ item, depth, onDelete, toggle }) => {
     }
 
     const toggleExpand = () => {
+        parentExpand();
         setIsExpanded(!isExpanded);
     };
 
@@ -77,6 +78,7 @@ const MenuItem = ({ item, depth, onDelete, toggle }) => {
                                     depth={itemDepth}
                                     onDelete={onDelete}
                                     toggle={toggle}
+                                    parentExpand={parentExpand}
                                 />
                             ))}
                         </div>
