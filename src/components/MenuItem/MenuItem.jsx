@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { addInfo } from '../../store/AddMenuSlice';
 import "./MenuItem-Style.css";
 
@@ -23,9 +23,9 @@ const MenuItem = ({ item, depth, onDelete, toggle, parentExpand }) => {
         dispatch(addInfo(item));
     }
 
-    const toggleExpand = () => {
-        parentExpand();
+    function toggleExpand(parentId) {
         setIsExpanded(!isExpanded);
+        parentExpand();
     };
 
     return (
@@ -34,56 +34,61 @@ const MenuItem = ({ item, depth, onDelete, toggle, parentExpand }) => {
 
                 {item?.parent_id && (<div className="left_v_border" />)}
 
-                <div className="ms-3">
+                <div className="d-flex justify-content-start align-items-center">
 
-                    <div className="d-flex justify-content-start align-items-center">
+                    {item?.parent_id && (<div className="mini_gap" />)}
 
-                        {item?.parent_id && (<div className="mini_gap" />)}
-
-                        {
-                            item?.children && item?.children?.length > 0 && (
-                                <button
-                                    style={{ marginLeft: (!item?.parent_id) && '12px' }}
-                                    onClick={toggleExpand}
-                                >
-                                    {
-                                        toggle.expand && isExpanded
-                                            ? <i className="fa-solid fa-angle-down"></i>
-                                            : <i className="fa-solid fa-angle-up"></i>
-                                    }
-                                </button>
-                            )
-                        }
-
-                        <div className="action_area">
-                            <span>{item.name}</span>
-
-                            <button onClick={() => addMenuHandler(item)}>
-                                <i className="fa-solid fa-plus"></i>
+                    {
+                        item?.children && item?.children?.length > 0 && (
+                            <button
+                                style={{ marginLeft: (!item?.parent_id) && '12px' }}
+                                onClick={() => toggleExpand(item?.parent_id)}
+                            >
+                                {
+                                    toggle.expand && isExpanded
+                                        ? <i className="fa-solid fa-angle-down"></i>
+                                        : <i className="fa-solid fa-angle-up"></i>
+                                }
                             </button>
+                        )
+                    }
 
-                            <button onClick={() => onDelete(item.id)}>
-                                <i className="fa-solid fa-trash"></i>
-                            </button>
-                        </div>
+                    <div className="action_area">
+                        <span>{item.name}</span>
 
+                        <button onClick={() => addMenuHandler(item)}>
+                            <i className="fa-solid fa-plus"></i>
+                        </button>
+
+                        <button onClick={() => onDelete(item.id)}>
+                            <i className="fa-solid fa-trash"></i>
+                        </button>
                     </div>
 
-                    {toggle.expand && isExpanded && item?.children && item?.children?.length > 0 && (
-                        <div className="nested_childs">
-                            {item.children.map((child) => (
-                                <MenuItem
-                                    key={child.id}
-                                    item={child}
-                                    depth={itemDepth}
-                                    onDelete={onDelete}
-                                    toggle={toggle}
-                                    parentExpand={parentExpand}
-                                />
-                            ))}
-                        </div>
-                    )}
                 </div>
+
+                {
+                    toggle?.expand
+                    && isExpanded
+                    && item?.children
+                    && item?.children?.length > 0
+                    && (
+                        <div className="nested_childs">
+                            {
+                                item?.children?.map((child) => (
+                                    <MenuItem
+                                        key={child.id}
+                                        item={child}
+                                        depth={itemDepth}
+                                        onDelete={onDelete}
+                                        toggle={toggle}
+                                        parentExpand={parentExpand}
+                                    />
+                                ))
+                            }
+                        </div>
+                    )
+                }
             </div>
         </>
     );

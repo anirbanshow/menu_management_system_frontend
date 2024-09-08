@@ -14,7 +14,6 @@ const MenuList = ({ menuItems, onDelete }) => {
     }
 
     function toggleFromParentExpandButton() {
-        console.log('toggleFromParentExpandButton');
         setToggle({
             expand: true,
             collaspe: false
@@ -25,7 +24,7 @@ const MenuList = ({ menuItems, onDelete }) => {
         <>
             <div className='menu_controll_area'>
                 <button
-                    className={toggle?.expand ? 'active' : ''}
+                    className={toggle?.expand ? 'active me-2' : ''}
                     onClick={() => buttonToggleHandler({ expand: true, collaspe: false })}
                 >
                     Expand All
@@ -38,7 +37,6 @@ const MenuList = ({ menuItems, onDelete }) => {
                     Collapse All
                 </button>
             </div>
-
 
             <div className='listing_wrapper'>
                 {menuItems?.map(item => (

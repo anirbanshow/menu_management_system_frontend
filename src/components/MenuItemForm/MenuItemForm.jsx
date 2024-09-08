@@ -57,7 +57,6 @@ const MenuItemForm = ({ onAdd, menuItems, childMenus }) => {
                 <input type="text" disabled className="form-control" value={menuID} />
             </div>
 
-
             <div className="mb-3">
                 <label>Depth</label>
                 <input type="number" className="form-control" onChange={(e) => setDepth(e.target.value)} />
