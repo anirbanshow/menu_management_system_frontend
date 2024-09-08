@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import { addInfo } from '../../store/AddMenuSlice';
 import "./MenuItem-Style.css";
 
@@ -10,15 +11,21 @@ const calculateMenuDepth = (menuItems) => {
     return 1 + Math.max(...menuItems.map(item => calculateMenuDepth(item.children || [])));
 };
 
-const MenuItem = ({ item, depth, onDelete }) => {
+const MenuItem = ({ item, depth, onDelete, toggle }) => {
 
-    const { MODE } = import.meta.env;
+    const [isExpanded, setIsExpanded] = useState(true);
 
     const dispatch = useDispatch();
 
     const itemDepth = depth + 1;
 
-    function addMenuHandler(item) { dispatch(addInfo(item)); }
+    function addMenuHandler(item) {
+        dispatch(addInfo(item));
+    }
+
+    const toggleExpand = () => {
+        setIsExpanded(!isExpanded);
+    };
 
     return (
         <>
@@ -33,30 +40,44 @@ const MenuItem = ({ item, depth, onDelete }) => {
                         {item?.parent_id && (<div className="mini_gap" />)}
 
                         {
-                            item.children && item.children.length > 0 && (
-                                <button><i class="fa-solid fa-angle-down"></i></button>
+                            item?.children && item?.children?.length > 0 && (
+                                <button
+                                    style={{ marginLeft: (!item?.parent_id) && '12px' }}
+                                    onClick={toggleExpand}
+                                >
+                                    {
+                                        toggle.expand && isExpanded
+                                            ? <i className="fa-solid fa-angle-down"></i>
+                                            : <i className="fa-solid fa-angle-up"></i>
+                                    }
+                                </button>
                             )
                         }
 
-                        <div class="action_area">
+                        <div className="action_area">
                             <span>{item.name}</span>
 
                             <button onClick={() => addMenuHandler(item)}>
-                                <i class="fa-solid fa-plus"></i>
+                                <i className="fa-solid fa-plus"></i>
                             </button>
 
                             <button onClick={() => onDelete(item.id)}>
-                                <i class="fa-solid fa-trash"></i>
+                                <i className="fa-solid fa-trash"></i>
                             </button>
                         </div>
 
-
                     </div>
 
-                    {item.children && item.children.length > 0 && (
+                    {toggle.expand && isExpanded && item?.children && item?.children?.length > 0 && (
                         <div className="nested_childs">
                             {item.children.map((child) => (
-                                <MenuItem key={child.id} item={child} depth={itemDepth} onDelete={onDelete} />
+                                <MenuItem
+                                    key={child.id}
+                                    item={child}
+                                    depth={itemDepth}
+                                    onDelete={onDelete}
+                                    toggle={toggle}
+                                />
                             ))}
                         </div>
                     )}

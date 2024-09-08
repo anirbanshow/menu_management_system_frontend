@@ -14,8 +14,8 @@ const BaseLayout = ({ children }) => {
 
             <Sidebar toggle={toggle} setToggle={setToggle} />
 
-            <div class="menu_toggle">
-                <img src="./assets/images/openSidebar.svg" class="menu_toggle" alt="Menu Toggle" onClick={menuToggleHandler} />
+            <div className="menu_toggle">
+                <img src="./assets/images/openSidebar.svg" className="menu_toggle" alt="Menu Toggle" onClick={menuToggleHandler} />
             </div>
 
             {children}

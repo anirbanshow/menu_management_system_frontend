@@ -2,11 +2,11 @@ import React from 'react'
 
 const NestedMenu = () => {
     return (
-        <div class="relative">
-            <div class="left_v_border"></div>
-            <div class="ms-3">
-                <div class="d-flex justify-content-start align-items-center">
-                    <div class="mini_gap"></div>
+        <div className="relative">
+            <div className="left_v_border"></div>
+            <div className="ms-3">
+                <div className="d-flex justify-content-start align-items-center">
+                    <div className="mini_gap"></div>
                     <span>Each Menu -&gt; Add ,Delete </span>
                 </div>
             </div>
